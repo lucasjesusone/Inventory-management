@@ -48,4 +48,14 @@ public class UserController {
     }
 
 
+    @PutMapping("/edit-user")
+    public ResponseEntity<UserModel> editUser(@RequestBody @Valid UserDto userDto) {
+        UserModel userModel = new UserModel();
+        BeanUtils.copyProperties(userDto, userModel);
+        userService.sendUser(userModel);
+        return new ResponseEntity<>(userModel, HttpStatus.CREATED);
+
+    }
+
+
 }
