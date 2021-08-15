@@ -21,7 +21,7 @@ public class UserController {
     UserService userService;
 
 
-    @PostMapping("/new-user")
+    @PostMapping("/new")
     public ResponseEntity<UserModel> newUser(@RequestBody @Valid UserDto userDto) {
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
@@ -31,13 +31,13 @@ public class UserController {
     }
 
 
-    @GetMapping("/getAllUser")
+    @GetMapping("/service/user")
     public List<UserModel> findAll() {
         return userService.findAll();
     }
 
 
-    @GetMapping("/getUserById/{id}")
+    @GetMapping("/service/user/{id}")
     public ResponseEntity<UserModel> GetById(@PathVariable final UUID id) throws Exception {
         Optional<UserModel> userModel = userService.getById(id);
         if(userModel.isPresent()) {
@@ -48,7 +48,7 @@ public class UserController {
     }
 
 
-    @PutMapping("/edit-user")
+    @PutMapping("/service/user/{id}")
     public ResponseEntity<UserModel> editUser(@RequestBody @Valid UserDto userDto) {
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
@@ -56,6 +56,13 @@ public class UserController {
         return new ResponseEntity<>(userModel, HttpStatus.CREATED);
 
     }
+
+    @DeleteMapping("/service/user/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable UUID id) {
+        userService.deleteUser(id);
+        return new ResponseEntity<String>("User removed successfully",HttpStatus.OK);
+    }
+
 
 
 }
