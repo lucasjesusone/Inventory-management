@@ -53,14 +53,14 @@ public class UserController {
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
         userService.sendUser(userModel);
-        return new ResponseEntity<>(userModel, HttpStatus.CREATED);
+        return new ResponseEntity<>(userModel, HttpStatus.OK);
 
     }
 
     @DeleteMapping("/service/user/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable UUID id) {
         userService.deleteUser(id);
-        return new ResponseEntity<String>("User removed successfully",HttpStatus.OK);
+        return new ResponseEntity<>("User removed successfully",HttpStatus.OK);
     }
 
 
