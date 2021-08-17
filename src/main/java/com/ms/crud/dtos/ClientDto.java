@@ -7,6 +7,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Data
 public class ClientDto {
@@ -27,6 +28,7 @@ public class ClientDto {
     @NotNull
     private String cep;
     private String telefone;
+    private LocalDateTime createAt;
     @NotBlank
     private String cidade;
     @Enumerated(EnumType.STRING)

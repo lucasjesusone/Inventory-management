@@ -7,6 +7,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Data
 public class UserDto {
@@ -23,6 +24,7 @@ public class UserDto {
     private String email;
     @NotBlank
     private String password;
+    private LocalDateTime createAt;
     @Enumerated(EnumType.STRING)
     private EnumStatus status;
 

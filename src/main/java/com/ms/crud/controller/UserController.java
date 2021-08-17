@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -49,11 +50,10 @@ public class UserController {
 
 
     @PutMapping("/service/user/{id}")
-    public ResponseEntity<UserModel> editUser(@RequestBody @Valid UserDto userDto) {
-        UserModel userModel = new UserModel();
-        BeanUtils.copyProperties(userDto, userModel);
-        userService.sendUser(userModel);
-        return new ResponseEntity<>(userModel, HttpStatus.OK);
+    public ResponseEntity<UserModel> updateUser(@PathVariable UUID id, @RequestBody @Valid UserModel userModel) {
+        userModel.setUpdatedAt(LocalDateTime.now());
+        userService.getById(id);
+        return ResponseEntity.ok(userService.updateUser(userModel));
 
     }
 
