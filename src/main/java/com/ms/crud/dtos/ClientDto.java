@@ -28,7 +28,8 @@ public class ClientDto {
     @NotNull
     private String cep;
     private String telefone;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
+//    private LocalDateTime updatedAt;
     @NotBlank
     private String cidade;
     @Enumerated(EnumType.STRING)

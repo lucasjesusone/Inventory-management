@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name="clients")
+@Table(name = "clients", indexes = {
+        @Index(name = "idx_clientmodel_id_client", columnList = "id_client")
+})
 public class ClientModel implements Serializable {
 
 //    private static final long serialVersionUid = 1L;
@@ -31,7 +33,7 @@ public class ClientModel implements Serializable {
     private String cidade;
     private String uf;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+//    private LocalDateTime updatedAt;
     @Enumerated(EnumType.STRING)
     private EnumClient status;
     @ManyToOne
