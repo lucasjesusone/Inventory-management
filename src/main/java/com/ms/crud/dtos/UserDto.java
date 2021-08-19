@@ -24,7 +24,8 @@ public class UserDto {
     private String email;
     @NotBlank
     private String password;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     @Enumerated(EnumType.STRING)
     private EnumStatus status;
 

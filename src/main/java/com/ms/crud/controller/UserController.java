@@ -1,7 +1,9 @@
 package com.ms.crud.controller;
 
 import com.ms.crud.dtos.UserDto;
+import com.ms.crud.models.ClientModel;
 import com.ms.crud.models.UserModel;
+import com.ms.crud.repositories.UserRepository;
 import com.ms.crud.services.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserRepository userRepository;
 
 
     @PostMapping("/new")
@@ -50,12 +55,29 @@ public class UserController {
 
 
     @PutMapping("/service/user/{id}")
-    public ResponseEntity<UserModel> updateUser(@PathVariable UUID id, @RequestBody @Valid UserModel userModel) {
-        userModel.setUpdatedAt(LocalDateTime.now());
-        userService.getById(id);
-        return ResponseEntity.ok(userService.updateUser(userModel));
+    public UserModel updateUser(@PathVariable UUID id, @RequestBody UserModel userModel) {
+//        clientModel.setUpdatedAt(LocalDateTime.now());
+        UserModel c = userRepository.findById(id).get();
 
-    }
+        if(userModel.getFirstName() != null)
+            c.setFirstName(userModel.getFirstName());
+
+        if(userModel.getLastName() != null)
+            c.setLastName(userModel.getLastName());
+
+        if(userModel.getUsername() != null)
+            c.setUsername(userModel.getUsername());
+
+        if(userModel.getEmail() != null)
+            c.setEmail(userModel.getEmail());
+
+        if(userModel.getStatus() != null)
+            c.setStatus(userModel.getStatus());
+
+
+        userService.updateUser(c);
+        return userModel;
+    };
 
     @DeleteMapping("/service/user/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable UUID id) {

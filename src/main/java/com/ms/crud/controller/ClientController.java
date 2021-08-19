@@ -79,6 +79,9 @@ public class ClientController {
       if(clientModel.getCreatedAt() != null)
           c.setCreatedAt(clientModel.getCreatedAt());
 
+      if(clientModel.getStatus() != null)
+          c.setStatus(clientModel.getStatus());
+
       clientService.updateClient(c);
       return clientModel;
     };
