@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,7 +28,7 @@ public class UserController {
     UserRepository userRepository;
 
 
-    @PostMapping("/new")
+    @PostMapping("/service/user/new")
     public ResponseEntity<UserModel> newUser(@RequestBody @Valid UserDto userDto) {
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
@@ -37,9 +38,11 @@ public class UserController {
     }
 
 
-    @GetMapping("/service/user")
+    @GetMapping("/service/user/getAll")
     public List<UserModel> findAll() {
+
         return userService.findAll();
+
     }
 
 

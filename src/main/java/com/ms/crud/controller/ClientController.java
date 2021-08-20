@@ -82,6 +82,9 @@ public class ClientController {
       if(clientModel.getStatus() != null)
           c.setStatus(clientModel.getStatus());
 
+      if(clientModel.getId_client() !=null )
+          c.setId_client(clientModel.getId_client());
+
       clientService.updateClient(c);
       return clientModel;
     };
