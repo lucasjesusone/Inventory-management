@@ -1,4 +1,7 @@
 package com.ms.crud.repositories;
 
-public interface ProductRepository {
+import com.ms.crud.models.ProductModel;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductRepository extends JpaRepository<ProductModel, Long>{
 }
