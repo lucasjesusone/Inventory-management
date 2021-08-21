@@ -45,9 +45,9 @@ public class ClientController {
 
 
     @PutMapping("/service/client/{id_client}")
-    public ClientModel updateClient(@PathVariable Long id_client, @RequestBody ClientModel clientModel) {
+    public ClientModel updateClient(@PathVariable Long client_id, @RequestBody ClientModel clientModel) {
 //        clientModel.setUpdatedAt(LocalDateTime.now());
-        ClientModel c = clientRepository.findById(id_client).get();
+        ClientModel c = clientRepository.findById(client_id).get();
 
       if(clientModel.getCnpj() != null)
           c.setCnpj(clientModel.getCnpj());
@@ -82,8 +82,8 @@ public class ClientController {
       if(clientModel.getStatus() != null)
           c.setStatus(clientModel.getStatus());
 
-      if(clientModel.getId_client() !=null )
-          c.setId_client(clientModel.getId_client());
+      if(clientModel.getClient_id() !=null )
+          c.setClient_id(clientModel.getClient_id());
 
       clientService.updateClient(c);
       return clientModel;

@@ -12,16 +12,21 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "clients", indexes = {
-        @Index(name = "idx_clientmodel_id_client", columnList = "id_client")
-})
+@Table(name = "clients")
 public class ClientModel implements Serializable {
 
-//    private static final long serialVersionUid = 1L;
-
+    private static final long serialVersionUid = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_client;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getClient_id() {
+        return client_id;
+    }
+
+    public void setClient_id(Long client_id) {
+        this.client_id = client_id;
+    }
+
+    private Long client_id;
     private String cnpj;
     private String inscricaoEstadual;
     private String inscricaoMunicipal;
@@ -36,8 +41,5 @@ public class ClientModel implements Serializable {
     private LocalDateTime updatedAt;
     @Enumerated(EnumType.STRING)
     private EnumClient status;
-    @ManyToOne
-    @JoinColumn
-    private UserModel userModel;
 
 }

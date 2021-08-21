@@ -19,11 +19,9 @@ import java.util.UUID;
 public class UserModel implements Serializable {
     private static final long serialVersionUid = 1L;
 
-
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long client_id;
     private String firstName;
     private String lastName;
     private String username;

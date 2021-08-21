@@ -36,7 +36,7 @@ public class UserService {
         }
 
 
-        public Optional<UserModel> getById(UUID id) {
+        public Optional<UserModel> getById(Long id) {
                 return userRepository.findById(id);
         }
 
@@ -44,7 +44,7 @@ public class UserService {
                 return userRepository.save(userModel);
         }
 
-        public void deleteUser(UUID id) {
+        public void deleteUser(Long id) {
                 userRepository.deleteById(id);
         ;}
 

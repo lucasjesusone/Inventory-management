@@ -47,7 +47,7 @@ public class UserController {
 
 
     @GetMapping("/service/user/{id}")
-    public ResponseEntity<UserModel> GetById(@PathVariable final UUID id) throws Exception {
+    public ResponseEntity<UserModel> GetById(@PathVariable final Long id) throws Exception {
         Optional<UserModel> userModel = userService.getById(id);
         if(userModel.isPresent()) {
             return new ResponseEntity<>(userModel.get(), HttpStatus.OK);
@@ -58,7 +58,7 @@ public class UserController {
 
 
     @PutMapping("/service/user/{id}")
-    public UserModel updateUser(@PathVariable UUID id, @RequestBody UserModel userModel) {
+    public UserModel updateUser(@PathVariable Long id, @RequestBody UserModel userModel) {
 //        clientModel.setUpdatedAt(LocalDateTime.now());
         UserModel c = userRepository.findById(id).get();
 
@@ -83,7 +83,7 @@ public class UserController {
     };
 
     @DeleteMapping("/service/user/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable UUID id) {
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return new ResponseEntity<>("User removed successfully",HttpStatus.OK);
     }
