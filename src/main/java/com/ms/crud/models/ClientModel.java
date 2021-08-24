@@ -38,7 +38,6 @@ public class ClientModel implements Serializable {
     private String cidade;
     private String uf;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
     @Enumerated(EnumType.STRING)
     private EnumClient status;
 
