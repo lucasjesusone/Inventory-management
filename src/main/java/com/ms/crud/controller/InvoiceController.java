@@ -24,6 +24,7 @@ public class InvoiceController {
     @Autowired
     InvoiceRepository invoiceRepository;
 
+    @CrossOrigin
     @PostMapping("/service/invoice/new")
     public ResponseEntity<InvoiceModel> newInvoice(@RequestBody @Valid InvoiceDto invoiceDto) throws Exception {
         InvoiceModel invoiceModel = new InvoiceModel();
@@ -31,7 +32,7 @@ public class InvoiceController {
         invoiceService.createInvoice(invoiceModel);
         return new ResponseEntity<>(invoiceModel, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @GetMapping("/service/invoice/getAll")
     public List<InvoiceModel> findAll() {
 
