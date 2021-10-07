@@ -1,6 +1,7 @@
 package com.ms.crud.models;
 
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "services")
+@Table(name="services")
 public class ServiceModel implements Serializable {
 
     private static final long serialVersionUid = 1L;
