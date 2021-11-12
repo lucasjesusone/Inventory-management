@@ -1,56 +1,58 @@
 package com.ms.crud.dtos;
 
 
-import com.ms.crud.enums.EnumFreight;
-import com.ms.crud.enums.TypesUnit;
-import com.ms.crud.models.ClientModel;
-import com.ms.crud.models.InvoiceModel;
-import com.ms.crud.models.ProductModel;
-import com.sun.istack.NotNull;
 import lombok.Data;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Data
+@NotBlank
+@NotNull
 public class InvoiceDto {
 
-    @NotNull
-    private Integer serie;
-    @NotNull
-    private Integer ncm_sh;
-    @NotNull
-    private Integer product_code;
-    @NotNull
-    private Date issueDate;
-    @NotNull
     private String natureOfOperation;
-    @NotNull
-    private Integer invoice_number;
-    @NotNull
-    private Integer cst;
-    private Integer cfop;
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private TypesUnit unit;
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private EnumFreight freight;
-    @NotNull
-    private Float value_unit;
-    @NotNull
-    private Float total_value;
-    @NotNull
-    private Integer qtd;
-    private LocalDateTime createdAt;
-    @OneToOne
-    @JoinColumn
-    private ProductModel product;
-    @OneToOne
-    @JoinColumn
-    private ClientModel client;
+    private Date issuanceDate;
+    private Date exitDate;
+    private Timestamp exitHour;
+    private Double icmsBaseCalc;
+    private Double icmsValue;
+    private String shippingName;
+    private Integer invoiceNumber;
+    private String senderAddress;
+    private String senderNeighborhood;
+    private String senderCep;
+    private String senderCounty;
+    private String senderPhone;
+    private String senderUF;
+    private String senderIE;
+    private String senderCorporateName;
+    private String recipientAddress;
+    private String recipientNeighborhood;
+    private String recipientCep;
+    private String recipientCounty;
+    private String recipientPhone;
+    private String recipientUF;
+    private String recipientIE;
+    private String recipientCorporateName;
+    private Double totalValueProducts;
+    private Double totalValueInvoice;
+    private String carrierCorporateName;
+    private Integer freightCarrier;
+    private String carrierVehiclePlate;
+    private String carrierAddress;
+    private String carrierCounty;
+    private String carrierUF;
+    private String carrierIE;
+    private Double substIcmsBaseCalc;
+    private Double substIcmsValue;
+    private String justification;
+    private String invoiceSeries;
+    private Double grossWeight;
+    private Double netWeight;
+
+    private ArrayList<InvoiceProductDto> produtos;
 }

@@ -1,18 +1,19 @@
 package com.ms.crud.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ms.crud.enums.EnumStatus;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name="users")
 
@@ -37,5 +38,17 @@ public class UserModel implements Serializable {
         return password;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        UserModel userModel = (UserModel) o;
 
+        return Objects.equals(client_id, userModel.client_id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 484641579;
+    }
 }

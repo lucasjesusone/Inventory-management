@@ -39,7 +39,7 @@ public class ClientController {
         return new ResponseEntity<>(clientModel, HttpStatus.CREATED);
     }
 
-
+    @CrossOrigin
     @GetMapping("/service/client/getAll")
     public List<ClientModel> findAll() {return clientService.findAll();}
 
@@ -52,29 +52,29 @@ public class ClientController {
       if(clientModel.getCnpj() != null)
           c.setCnpj(clientModel.getCnpj());
 
-      if(clientModel.getInscricaoEstadual() != null)
-            c.setInscricaoEstadual(clientModel.getInscricaoEstadual());
+      if(clientModel.getStateRegistration() != null)
+            c.setStateRegistration(clientModel.getStateRegistration());
 
-      if(clientModel.getRazaoSocial() != null)
-            c.setRazaoSocial(clientModel.getRazaoSocial());
+      if(clientModel.getCorporateName() != null)
+            c.setCorporateName(clientModel.getCorporateName());
 
-      if(clientModel.getEndereco() != null)
-            c.setEndereco(clientModel.getEndereco());
+      if(clientModel.getAddress() != null)
+            c.setAddress(clientModel.getAddress());
 
-      if(clientModel.getBairro() != null)
-            c.setBairro(clientModel.getBairro());
+      if(clientModel.getNeighborhood() != null)
+            c.setNeighborhood(clientModel.getNeighborhood());
 
       if(clientModel.getCep() != null)
             c.setCep(clientModel.getCep());
 
-      if(clientModel.getTelefone() != null)
-            c.setTelefone(clientModel.getTelefone());
+      if(clientModel.getPhoneNumber() != null)
+            c.setPhoneNumber(clientModel.getPhoneNumber());
 
       if(clientModel.getUf() != null)
             c.setUf(clientModel.getUf());
 
-      if(clientModel.getCidade() != null)
-          c.setCidade(clientModel.getCidade());
+      if(clientModel.getCity() != null)
+          c.setCity(clientModel.getCity());
 
       if(clientModel.getCreatedAt() != null)
           c.setCreatedAt(clientModel.getCreatedAt());
@@ -82,8 +82,8 @@ public class ClientController {
       if(clientModel.getStatus() != null)
           c.setStatus(clientModel.getStatus());
 
-      if(clientModel.getClient_id() !=null )
-          c.setClient_id(clientModel.getClient_id());
+//      if(clientModel.getClient_id() !=null )
+//          c.setClient_id(clientModel.getClient_id());
 
       clientService.updateClient(c);
       return clientModel;

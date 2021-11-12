@@ -1,44 +1,89 @@
 package com.ms.crud.models;
-import com.ms.crud.enums.EnumFreight;
-import com.ms.crud.enums.TypesUnit;
-import com.sun.istack.NotNull;
-import lombok.Data;
+
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "invoices")
 public class InvoiceModel {
 
     private static final long serialVersionUid = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long invoice_id;
-    private Integer serie;
-    private Integer ncm_sh;
-    private Integer product_code;
-    private Date issueDate;
-    private Integer invoice_number;
-    private Integer cst;
-    private Integer cfop;
-    private Integer qtd;
+    private Long invoiceId;
     private String natureOfOperation;
-    @Enumerated(EnumType.STRING)
-    private TypesUnit unit;
-    @Enumerated(EnumType.STRING)
-    private EnumFreight freight;
-    private Float value_unit;
-    private Float total_value;
-    private LocalDateTime createdAt;
-    @OneToOne
-    @JoinColumn
-    private ProductModel product;
-    @OneToOne
-    @JoinColumn
-    private ClientModel client;
+    private Date issuanceDate;
+    private Date exitDate;
+    private Timestamp exitHour;
+    private Double icmsBaseCalc;
+    private Double icmsValue;
+    private String shippingName;
+    private Integer invoiceNumber;
+    private String senderAddress;
+    private String senderNeighborhood;
+    private String senderCep;
+    private String senderCounty;
+    private String senderPhone;
+    private String senderUF;
+    private String senderIE;
+    private String senderCorporateName;
+    private String recipientAddress;
+    private String recipientNeighborhood;
+    private String recipientCep;
+    private String recipientCounty;
+    private String recipientPhone;
+    private String recipientUF;
+    private String recipientIE;
+    private String recipientCorporateName;
+    private Double totalValueProducts;
+    private Double totalValueInvoice;
+    private String carrierCorporateName;
+    private Integer freightCarrier;
+    private String carrierVehiclePlate;
+    private String carrierAddress;
+    private String carrierCounty;
+    private String carrierUF;
+    private String carrierIE;
+    private Double substIcmsBaseCalc;
+    private Double substIcmsValue;
+    private String justification;
+    private String invoiceSeries;
+    private Double grossWeight;
+    private Double netWeight;
 
+
+    //    @JsonIgnoreProperties("invoices")
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(name = "invoice_product",
+            joinColumns = {@JoinColumn(name = "invoice_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")},
+            foreignKey = @ForeignKey(name = "invoice_item_invoice_fk_fk"),
+            inverseForeignKey = @ForeignKey(name = "invoice_item_invoice_item_fk"))
+    @ToString.Exclude
+    private Set<InvoiceProductModel> produtos = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        InvoiceModel that = (InvoiceModel) o;
+
+        return Objects.equals(invoiceId, that.invoiceId);
+    }
+
+    @Override
+    public int hashCode() {
+        return 554252084;
+    }
 }

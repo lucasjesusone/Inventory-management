@@ -10,29 +10,22 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
+@NotNull
+@NotBlank
 public class ClientDto {
 
-    @NotBlank
     private String cnpj;
-    @NotNull
-    private String inscricaoEstadual;
-    private String inscricaoMunicipal;
-    @NotBlank
-    private String razaoSocial;
-    @NotNull
-    private String endereco;
-    @NotNull
-    private String bairro;
-    @NotBlank
-    private String uf;
-    @NotNull
+    private String stateRegistration;
+    private String countyRegistration;
+    private String corporateName;
+    private String address;
+    private String neighborhood;
     private String cep;
-    private String telefone;
+    private Number phoneNumber;
+    private String city;
+    private String uf;
     private LocalDateTime createdAt;
-    @NotBlank
-    private String cidade;
     @Enumerated(EnumType.STRING)
     private EnumClient status;
-
 
 }

@@ -1,25 +1,28 @@
 package com.ms.crud.services;
 
-import com.ms.crud.models.ProductModel;
-import com.ms.crud.models.UserModel;
+import com.ms.crud.models.InvoiceProductModel;
 import com.ms.crud.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public ProductModel createProduct(ProductModel productModel) throws Exception {
-        productModel.setCreatedAt(LocalDateTime.now());
+
+    public InvoiceProductModel createProduct(InvoiceProductModel invoiceProductModel) throws Exception {
+//        invoiceItemsModel.setCreatedAt(LocalDateTime.now());
         try {
-            return productRepository.save(productModel);
+            return productRepository.save(invoiceProductModel);
         } catch (Exception e) {
                 throw new Exception();
         }
+    }
+
+    public List<InvoiceProductModel> findAll() {
+        return productRepository.findAll();
     }
 }

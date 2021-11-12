@@ -3,14 +3,15 @@ package com.ms.crud.dtos;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
+@NotBlank
+@NotNull
 public class ServiceDto {
 
-    @NotBlank
     private String serviceName;
-    @NotBlank
     private String description;
     private LocalDateTime createdAt;
 }
