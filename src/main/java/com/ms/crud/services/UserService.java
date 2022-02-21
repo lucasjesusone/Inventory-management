@@ -1,5 +1,6 @@
 package com.ms.crud.services;
 
+import com.ms.crud.models.NoteModel;
 import com.ms.crud.models.UserModel;
 import com.ms.crud.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,14 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
-
 public class UserService {
 
         @Autowired
@@ -22,8 +19,7 @@ public class UserService {
 
         PasswordEncoder passwordEncoder;
 
-        public UserModel sendUser(UserModel userModel) {
-                userModel.setCreatedAt(LocalDateTime.now());
+        public UserModel create(UserModel userModel) {
                 this.passwordEncoder = new BCryptPasswordEncoder();
                 String encodedPassword = this.passwordEncoder.encode(userModel.getPassword());
                 userModel.setPassword(encodedPassword);
@@ -36,7 +32,7 @@ public class UserService {
         }
 
 
-        public Optional<UserModel> getById(Long id) {
+        public Optional<UserModel> getById(Integer id) {
                 return userRepository.findById(id);
         }
 
@@ -44,8 +40,9 @@ public class UserService {
                 return userRepository.save(userModel);
         }
 
-        public void deleteUser(Long id) {
+        public void deleteUser(Integer id) {
                 userRepository.deleteById(id);
         ;}
+
 
 }

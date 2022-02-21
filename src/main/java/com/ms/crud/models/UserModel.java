@@ -1,14 +1,9 @@
 package com.ms.crud.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ms.crud.enums.EnumStatus;
 import lombok.*;
-import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -18,37 +13,27 @@ import java.util.Objects;
 @Table(name="users")
 
 public class UserModel implements Serializable {
-    private static final long serialVersionUid = 1L;
+    private static final long serialVersionUID = 3303958233860785745L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long client_id;
-    private String firstName;
-    private String lastName;
+    @Column(name = "USER_ID")
+    @SequenceGenerator(name = "user_seq", sequenceName = "note_app.user_sequence", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+    private Integer userId;
+
+
+    @Column(name = "NAME")
+    private String name;
+
+    @Column(name = "USERNAME")
     private String username;
-    private String email;
+
+
+    @Column(name = "SECRET")
     private String password;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    @Enumerated(EnumType.STRING)
-    private EnumStatus status;
 
-    @JsonIgnore
-    public String getPassword() {
-        return password;
-    }
+    @Column(name = "EMAIL")
+    private String email;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        UserModel userModel = (UserModel) o;
 
-        return Objects.equals(client_id, userModel.client_id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 484641579;
-    }
 }
