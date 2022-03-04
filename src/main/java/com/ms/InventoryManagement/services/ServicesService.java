@@ -13,7 +13,7 @@ public class ServicesService {
     @Autowired
     ServiceRepository serviceRepository;
 
-    public ServiceModel createService(ServiceModel serviceModel) throws Exception {
+    public ServiceModel create(ServiceModel serviceModel) throws Exception {
         serviceModel.setCreatedAt(LocalDateTime.now());
         try {
             return serviceRepository.save(serviceModel);

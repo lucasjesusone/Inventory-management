@@ -21,8 +21,8 @@ public class ServiceModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_service;
-    private String serviceName;
+    private Long id;
+    private String name;
     private String description;
     private LocalDateTime createdAt;
 
@@ -32,7 +32,7 @@ public class ServiceModel implements Serializable {
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         ServiceModel that = (ServiceModel) o;
 
-        return Objects.equals(id_service, that.id_service);
+        return Objects.equals(id, that.id);
     }
 
     @Override

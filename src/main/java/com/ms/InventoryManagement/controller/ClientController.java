@@ -1,7 +1,8 @@
 package com.ms.InventoryManagement.controller;
 
-import com.ms.InventoryManagement.dtos.ClientDto;
 import com.ms.InventoryManagement.models.ClientModel;
+import com.ms.InventoryManagement.models.ResponseModel;
+import com.ms.InventoryManagement.models.UserModel;
 import com.ms.InventoryManagement.repositories.ClientRepository;
 import com.ms.InventoryManagement.services.ClientService;
 import lombok.SneakyThrows;
@@ -18,8 +19,9 @@ import java.time.Instant;
 import java.util.List;
 
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping("/service/client")
 public class ClientController {
 
     @Autowired
@@ -28,25 +30,33 @@ public class ClientController {
     @Autowired
     ClientRepository clientRepository;
 
-    @SneakyThrows
-    @PostMapping("/service/client/new")
-    public ResponseEntity<ClientModel> newClient(@RequestBody @Valid ClientDto clientDto) {
-        clientDto.setCreatedAt(Timestamp.from(Instant.now()));
-        ClientModel clientModel = new ClientModel();
-        BeanUtils.copyProperties(clientDto, clientModel);
-        clientService.createClient(clientModel);
-        return new ResponseEntity<>(clientModel, HttpStatus.CREATED);
+    @PostMapping(value ="/new", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity<ResponseModel> create(@Valid @RequestBody ClientModel entity) {
+
+        ClientModel clientModel = clientService.createClient(entity);
+
+        try{
+            if(clientModel == null) {
+                return new ResponseEntity<>(new ResponseModel(0L, 0, "user cannot be null"), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseModel(0L,0, "user hasn't created successfully", e.getMessage(), ""), HttpStatus.CREATED);
+        }
+
+
+        return new ResponseEntity<>(new ResponseModel(entity.getId(),1, "user created successfully"), HttpStatus.CREATED);
     }
 
     @SneakyThrows
-    @GetMapping("/service/client/getAll")
+    @GetMapping("/getAll")
     public List<ClientModel> findAll() {
         return clientService.findAll();
     }
 
 
     @SneakyThrows
-    @PutMapping(value = "/service/client/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClientModel> updateCliente(@PathVariable Long id, @RequestBody ClientModel clientModel) {
         clientModel.setUpdatedAt(Timestamp.from(Instant.now()));
         clientService.updateClient(clientModel, id);
@@ -54,7 +64,7 @@ public class ClientController {
     }
 
     @SneakyThrows
-    @DeleteMapping("/service/client/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteClient(@PathVariable Long id_client) {
         clientService.deleteClient(id_client);
         return new ResponseEntity<>("Client removed successfully", HttpStatus.OK);

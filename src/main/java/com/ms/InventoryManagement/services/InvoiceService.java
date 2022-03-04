@@ -12,7 +12,7 @@ public class InvoiceService {
     @Autowired
     InvoiceRepository invoiceRepository;
 
-    public InvoiceModel createInvoice(InvoiceModel invoiceModel) throws Exception {
+    public InvoiceModel create(InvoiceModel invoiceModel) throws Exception {
 //        invoiceModel.setCreatedAt(LocalDateTime.now());
         try {
             return invoiceRepository.save(invoiceModel);

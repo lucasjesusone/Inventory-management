@@ -1,20 +1,22 @@
 package com.ms.InventoryManagement.controller;
 
-import com.ms.InventoryManagement.dtos.ServiceDto;
+import com.ms.InventoryManagement.models.ResponseModel;
 import com.ms.InventoryManagement.models.ServiceModel;
 import com.ms.InventoryManagement.repositories.ServiceRepository;
 import com.ms.InventoryManagement.services.ServicesService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping("/service/service")
 public class ServiceController {
 
     @Autowired
@@ -25,11 +27,21 @@ public class ServiceController {
 
 
 
-    @PostMapping("/service/service/new")
-    public ResponseEntity<ServiceModel> newService(@RequestBody @Valid ServiceDto serviceDto) throws Exception {
-        ServiceModel serviceModel = new ServiceModel();
-        BeanUtils.copyProperties(serviceDto, serviceModel);
-        servicesService.createService(serviceModel);
-        return new ResponseEntity<>(serviceModel, HttpStatus.CREATED);
+    @PostMapping(value ="/new", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity<ResponseModel> create(@Valid @RequestBody ServiceModel entity) throws Exception {
+
+        ServiceModel serviceModel = servicesService.create(entity);
+
+        try {
+            if(serviceModel == null) {
+                return new ResponseEntity<>(new ResponseModel(0L,0, "user cannot be null"), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseModel(0L,0, "user hasn't created successfully", e.getMessage(), ""), HttpStatus.CREATED);
+        }
+
+
+        return new ResponseEntity<>(new ResponseModel(entity.getId(),1, "user created successfully"), HttpStatus.CREATED);
     }
 }

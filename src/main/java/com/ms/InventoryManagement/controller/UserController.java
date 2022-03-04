@@ -32,16 +32,15 @@ public class UserController {
 
         UserModel userModel = userService.newUser(entity);
 
-        try {
-
+        try{
             if(userModel == null) {
                 return new ResponseEntity<>(new ResponseModel(0L,0, "user cannot be null"), HttpStatus.INTERNAL_SERVER_ERROR);
             }
-
-            return new ResponseEntity<>(new ResponseModel(entity.getId(),1, "user created successfully"), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseModel(0L,0, "user hasn't created successfully", e.getMessage(), ""), HttpStatus.CREATED);
         }
+
+        return new ResponseEntity<>(new ResponseModel(entity.getId(),1, "user created successfully"), HttpStatus.CREATED);
     }
 
 

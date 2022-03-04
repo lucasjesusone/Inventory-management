@@ -13,7 +13,7 @@ public class ProductService {
     ProductRepository productRepository;
 
 
-    public InvoiceProductModel createProduct(InvoiceProductModel invoiceProductModel) throws Exception {
+    public InvoiceProductModel create(InvoiceProductModel invoiceProductModel) throws Exception {
 //        invoiceItemsModel.setCreatedAt(LocalDateTime.now());
         try {
             return productRepository.save(invoiceProductModel);

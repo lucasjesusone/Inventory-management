@@ -1,7 +1,8 @@
 package com.ms.InventoryManagement.controller;
 
-import com.ms.InventoryManagement.dtos.InvoiceDto;
 import com.ms.InventoryManagement.models.InvoiceModel;
+import com.ms.InventoryManagement.models.ResponseModel;
+import com.ms.InventoryManagement.models.ServiceModel;
 import com.ms.InventoryManagement.repositories.InvoiceRepository;
 import com.ms.InventoryManagement.services.InvoiceService;
 import org.springframework.beans.BeanUtils;
@@ -27,12 +28,22 @@ public class InvoiceController {
     InvoiceRepository invoiceRepository;
 
 
-    @PostMapping("/newInvoice")
-    public ResponseEntity<InvoiceModel> newInvoice(@RequestBody @Valid InvoiceDto invoiceDto) throws Exception {
-        InvoiceModel invoiceModel = new InvoiceModel();
-        BeanUtils.copyProperties(invoiceDto, invoiceModel);
-        invoiceService.createInvoice(invoiceModel);
-        return new ResponseEntity<>(invoiceModel, HttpStatus.CREATED);
+    @PostMapping(value ="/new", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity<ResponseModel> create(@Valid @RequestBody InvoiceModel entity) throws Exception {
+
+        InvoiceModel invoiceModel = invoiceService.create(entity);
+
+        try {
+            if(invoiceModel == null) {
+                return new ResponseEntity<>(new ResponseModel(0L,0, "user cannot be null"), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseModel(0L,0, "user hasn't created successfully", e.getMessage(), ""), HttpStatus.CREATED);
+        }
+
+
+        return new ResponseEntity<>(new ResponseModel(entity.getInvoiceId(),1, "user created successfully"), HttpStatus.CREATED);
     }
 
 
