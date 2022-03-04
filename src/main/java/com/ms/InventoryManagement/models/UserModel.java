@@ -21,7 +21,8 @@ public class UserModel implements Serializable {
     private static final long serialVersionUid = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "user_seq", sequenceName = "users_id_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
     private Long id;
     private String firstName;
     private String lastName;
@@ -33,10 +34,6 @@ public class UserModel implements Serializable {
     @Enumerated(EnumType.STRING)
     private EnumStatus status;
 
-    @JsonIgnore
-    public String getPassword() {
-        return password;
-    }
 
     @Override
     public boolean equals(Object o) {

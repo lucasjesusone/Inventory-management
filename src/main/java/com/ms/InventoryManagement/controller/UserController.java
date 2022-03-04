@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class UserController {
     @PostMapping(value ="/new", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<ResponseModel> create(@Valid @RequestBody UserModel entity) {
-
+        entity.setCreatedAt(LocalDateTime.now());
         UserModel userModel = userService.newUser(entity);
 
         try{
@@ -69,6 +70,7 @@ public class UserController {
         Optional<UserModel> user = userRepository.findById(id);
 
         if(user.isPresent()) {
+            entity.setUpdatedAt(LocalDateTime.now());
             userService.updateUser(entity);
         }
 
