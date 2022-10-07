@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -21,16 +22,23 @@ public class ClientModel implements Serializable {
     private static final long serialVersionUid = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long id;
     private String cnpj;
+    private String cpf;
+    @NotNull
+    private Boolean type;
     private String stateRegistration;
     private String countyRegistration;
-    private String corporateName;
+    @NotNull
+    private String name;
     private String address;
     private String neighborhood;
     private String cep;
     private Number phoneNumber;
+    @NotNull
     private String city;
+    @NotNull
     private String uf;
     private Timestamp createdAt;
     @Enumerated(EnumType.STRING)

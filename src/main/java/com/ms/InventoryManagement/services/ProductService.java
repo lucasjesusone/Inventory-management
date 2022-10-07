@@ -1,6 +1,7 @@
 package com.ms.InventoryManagement.services;
 
-import com.ms.InventoryManagement.models.InvoiceProductModel;
+
+import com.ms.InventoryManagement.models.ProductModel;
 import com.ms.InventoryManagement.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,16 +14,22 @@ public class ProductService {
     ProductRepository productRepository;
 
 
-    public InvoiceProductModel create(InvoiceProductModel invoiceProductModel) throws Exception {
+    public ProductModel create(ProductModel productModel) throws Exception {
 //        invoiceItemsModel.setCreatedAt(LocalDateTime.now());
         try {
-            return productRepository.save(invoiceProductModel);
+           ProductModel findProduct = productRepository.findByProductCode(productModel.getProductCode());
+            if(findProduct != null) {
+                findProduct.setQuantity(findProduct.getQuantity() + productModel.getQuantity());
+                return productRepository.save(findProduct);
+            }
+            return productRepository.save(productModel);
+
         } catch (Exception e) {
                 throw new Exception();
         }
     }
 
-    public List<InvoiceProductModel> findAll() {
+    public List<ProductModel> findAll() {
         return productRepository.findAll();
     }
 }

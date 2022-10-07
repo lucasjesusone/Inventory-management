@@ -5,7 +5,9 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -13,29 +15,31 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "products")
-public class InvoiceProductModel implements Serializable {
+@Table(name = "stock")
+public class ProductModel implements Serializable {
     private static final long serialVersionUid = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
+    @NotNull
     private Integer productCode;
+    @NotNull
     private String productDescription;
-    private String unit;
+    @NotNull
+    private String category;
+    @NotNull
     private Double quantity;
-    private Double totalValue;
-    private Double icmsAliquot;
+    @NotNull
     private Double unitaryValue;
-    private Integer cfop;
-    private Integer cst;
-    private Integer ncmSh;
+    private Date acquiredDate;
+    private Double acquiredValue;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        InvoiceProductModel that = (InvoiceProductModel) o;
+        ProductModel that = (ProductModel) o;
 
         return Objects.equals(productId, that.productId);
     }

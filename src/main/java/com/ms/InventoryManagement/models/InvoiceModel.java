@@ -64,7 +64,7 @@ public class InvoiceModel {
             foreignKey = @ForeignKey(name = "invoice_item_invoice_fk_fk"),
             inverseForeignKey = @ForeignKey(name = "invoice_item_invoice_item_fk"))
     @ToString.Exclude
-    private Set<InvoiceProductModel> produtos = new HashSet<>();
+    private Set<ProductModel> produtos = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
